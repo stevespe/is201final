@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Spencer Stevenson's Gear</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+    <style>
+      body {
+        background: linear-gradient(120deg, #e0f7fa, #ffffff);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+      h2 {
+        font-weight: 700;
+        color: #00796b;
+      }
+      .gear-card {
+        cursor: pointer;
+        transition: transform 0.2s;
+        border-radius: 1rem;
+        overflow: hidden;
+      }
+      .gear-card:hover {
+        transform: scale(1.03);
+      }
+      .gear-image {
+        height: 200px;
+        object-fit: cover;
+      }
+      .filter-select {
+        max-width: 300px;
+        margin: 0 auto 2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container py-5 text-center">
+      <h2 class="mb-4">Spencer Stevenson's Ski Gear Setup</h2>
+      <select id="gearFilter" class="form-select filter-select">
+        <option value="all">All Gear</option>
+        <option value="park">Park Setup</option>
+        <option value="all-mountain">All-Mountain Setup</option>
+        <option value="touring">Touring Setup</option>
+      </select>
+      <div id="gear-gallery" class="row g-4 justify-content-center">
+        <!-- Cards injected by JavaScript -->
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const gearData = [
+          {
+            name: "Head Oblivion 94 Skis",
+            image: "https://cdn-mdb.head.com/CDN3/D/315514.SET_WO/1/1200x1200/oblivion-94-without-binding.webp",
+            sponsor: { name: "Head Oblivion 94", url: "https://www.head.com/en_US/oblivion-94-315514-set.html" },
+            why: "Perfect for freestyle with responsive flex and durability for the park.",
+            category: ["park"]
+          },
+          {
+            name: "Tyrolia Attack 14 Bindings",
+            image: "https://cdn-mdb.head.com/CDN3/D/114641/1/1200x1200/attack-14-gw.webp",
+            sponsor: { name: "Attack 14", url: "https://www.tyrolia.com/en_US/attack-14-gw-114634-set.html" },
+            why: "Park-proven performance with a solid release mechanism.",
+            category: ["park", "all-mountain"]
+          },
+          {
+            name: "Head Raptor 120 RS Boots",
+            image: "https://cdn-mdb.head.com/CDN3/D/603029/1/1200x1200/raptor-wcr-120.webp",
+            sponsor: { name: "Raptor 120 RS", url: "https://www.head.com/en_US/raptor-wcr-120-603029.html" },
+            why: "Stiff, race-inspired boots that deliver control in park and all-mountain.",
+            category: ["park", "all-mountain"]
+          },
+          {
+            name: "Head Oblivion Poles",
+            image: "https://cdn-mdb.head.com/CDN3/D/381294/1/1200x1200/oblivion.webp",
+            sponsor: { name: "Oblivion Poles", url: "https://www.head.com/en_US/oblivion-381294.html" },
+            why: "Lightweight poles with durability for rails and jumps.",
+            category: ["park"]
+          },
+          {
+            name: "Giro Blok Goggles",
+            image: "https://www.giro.com/dw/image/v2/BDBJ_PRD/on/demandware.static/-/Sites-giro-master-catalog/default/dwa8a79c0e/images/large/giro-blok-snow-goggle-black-wordmark-vivid-onyx-hero.jpg?sw=800&sh=800&sm=fit",
+            sponsor: { name: "Blok Goggles", url: "https://www.giro.com/p/blok-snow-goggles/350030000700000014.html" },
+            why: "Cool freestyle look, simple design and functional lense",
+            category: ["park"]
+          },
+          {
+            name: "Head Kore 111 Skis",
+            image: "https://cdn-mdb.head.com/CDN3/D/315414.SET_WO/1/1200x1200/kore-111-without-binding.webp",
+            sponsor: { name: "Kore 111", url: "https://www.head.com/en_US/kore-111-315414-set.html" },
+            why: "Wide platform for stability in powder and versatility on groomers.",
+            category: ["all-mountain"]
+          },
+          {
+            name: "Head Kore Tour Poles",
+            image: "https://cdn-mdb.head.com/CDN3/D/381103/1/1200x1200/kore-free-tour.webp",
+            sponsor: { name: "Kore Tour Poles", url: "https://www.head.com/en_US/kore-free-tour-381103.html" },
+            why: "Adjustable poles ideal for both descents and quick hikes.",
+            category: ["all-mountain", "touring"]
+          },
+          {
+            name: "Giro Ledge Helmet",
+            image: "https://www.giro.com/dw/image/v2/BDBJ_PRD/on/demandware.static/-/Sites-giro-master-catalog/default/dw8dc929fb/images/large/giro-ledge-mips-snow-helmet-matte-black-left.jpg?sw=800&sh=800&sm=fit",
+            sponsor: { name: "Giro Ledge", url: "https://www.giro.com/p/ledge-mips-snow-helmet/200000000400000002.html" },
+            why: "Low-profile, durable, and versatile for all types of riding.",
+            category: ["park", "all-mountain", "touring"]
+          },
+          {
+            name: "Giro Method Goggles",
+            image: "https://www.giro.com/dw/image/v2/BDBJ_PRD/on/demandware.static/-/Sites-giro-master-catalog/default/dw34d12f9c/images/large/giro-method-goggle-black-white-vertigo-vivid-jet-black-hero.jpg?sw=800&sh=800&sm=fit",
+            sponsor: { name: "Giro Method", url: "https://www.giro.com/p/method-snow-goggles/350030000700000047.html" },
+            why: "Wide field of view and vivid lenses for high visibility.",
+            category: ["all-mountain", "touring"]
+          },
+          {
+            name: "Head Kore 99 Skis",
+            image: "https://cdn-mdb.head.com/CDN3/D/315434.SET_WO/1/1200x1200/kore-99-without-binding.webp",
+            sponsor: { name: "Kore 99", url: "https://www.head.com/en_US/kore-99-315434-set.html" },
+            why: "Great balance of lightweight construction and downhill performance.",
+            category: ["touring"]
+          },
+          {
+            name: "Tyrolia Almonte Bindings",
+            image: "https://cdn-mdb.head.com/CDN3/D/114582/1/1200x1200/almonte-12-pt.webp",
+            sponsor: { name: "Tyrolia Almonte", url: "https://www.tyrolia.com/en_US/almonte-12-pt-114582-set.html" },
+            why: "Lightweight touring bindings with great uphill efficiency.",
+            category: ["touring"]
+          },
+          {
+            name: "Head Kore 130 Boots",
+            image: "https://cdn-mdb.head.com/CDN3/D/604011/1/1200x1200/kore-130-mv-gw.webp",
+            sponsor: { name: "Kore 130 Boots", url: "https://www.head.com/en_US/kore-130-mv-gw-604011.html" },
+            why: "Hybrid boots that transition from hike mode to ski with ease.",
+            category: ["touring"]
+          }
+        ];
+
+        const gallery = document.getElementById("gear-gallery");
+        const filterSelect = document.getElementById("gearFilter");
+
+        function renderGear(filter = "all") {
+          gallery.innerHTML = "";
+          gearData.forEach((item) => {
+            if (filter === "all" || item.category.includes(filter)) {
+              const col = document.createElement("div");
+              col.className = "col-sm-6 col-lg-3";
+
+              const card = document.createElement("div");
+              card.className = "card h-100 shadow gear-card";
+              card.innerHTML = `
+                <img src="${item.image}" class="card-img-top gear-image" alt="${item.name}" />
+                <div class="card-body">
+                  <h5 class="card-title">${item.name}</h5>
+                  <p class="card-text">Link: <a href="${item.sponsor.url}" target="_blank">${item.sponsor.name}</a></p>
+                </div>
+                <div class="card-body border-top bg-light">
+                  <h6>Why I love it:</h6>
+                  <p>${item.why}</p>
+                </div>
+              `;
+              col.appendChild(card);
+              gallery.appendChild(col);
+            }
+          });
+        }
+
+        filterSelect.addEventListener("change", (e) => {
+          renderGear(e.target.value);
+        });
+
+        renderGear();
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,38 @@
+body {
+    background-color: #e6f2ff;
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+.header {
+    background-color: #004d66;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.sidebar {
+    float: left;
+    width: 20%;
+    background-color: #cceeff;
+    padding: 15px;
+    height: 100vh;
+}
+
+.mainbody {
+    margin-left: 22%;
+    padding: 20px;
+}
+
+.footer {
+    clear: both;
+    background-color: #004d66;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    margin-top: 20px;
+}
+
+.justify {
+    text-align: justify;
+}
